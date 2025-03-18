@@ -1,9 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
-import image from "../assets/images/money_bank.png";
+import image from "../assets/images/logo.svg";
 
 const Loader = () => {
-
   return (
     <Box
       height={"90vh"}
@@ -12,12 +10,22 @@ const Loader = () => {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <img src={image} alt="" />
-      <Typography gutterBottom fontSize={"1.2rem"} fontWeight={600}>
-        Payment Made Easy
+      <img src={image} alt="" width={150} />
+      <Typography
+        gutterBottom
+        fontFamily={"sans-serif"}
+        fontSize={"1.2rem"}
+        fontWeight={600}
+      >
+        Kunet App
       </Typography>
-      <Typography gutterBottom variant="body2" fontWeight={400}>
-        Buy. Redeem. Split. Share
+      <Typography
+        fontFamily={"fantasy"}
+        gutterBottom
+        fontSize={12}
+        fontWeight={400}
+      >
+        Music, Games, Apps, Movies, Books and more...
       </Typography>
     </Box>
   );

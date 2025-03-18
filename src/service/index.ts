@@ -11,8 +11,8 @@ class APIService {
   static getPaymentInfo = (transactionId: string) =>
     axiosInstance.get(`/vouchers/redeem-link/info/${transactionId}`).then((res) => res);
 
-  static redeem = (payload: any) =>
-    axiosInstance.post(`/vouchers/redeem`, payload, ).then((res) => res);
+  static redeem = (payload: any, transactionId: string) =>
+    axiosInstance.post(`/vouchers/redeem/link?transaction_id=${transactionId}`, payload).then((res) => res);
 }
 
 export default APIService;

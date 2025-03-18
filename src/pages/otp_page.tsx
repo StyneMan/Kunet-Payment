@@ -40,7 +40,7 @@ const OTPPage = () => {
   const isTablet = useMediaQuery(theme.breakpoints.only("sm"));
   const isPC = useMediaQuery(theme.breakpoints.up("md"));
 
-  const { redeemData, voucherInfo } = useSelector(
+  const { redeemData, voucherInfo, transactionId } = useSelector(
     (state: RootState) => state.redeem
   );
   const { isLoading } = useSelector((state: RootState) => state.loader);
@@ -123,7 +123,7 @@ const OTPPage = () => {
 
       console.log("REDEEM PAYLOAD CHECK :: :: ", payload);
 
-      const response = await APIService.redeem(payload);
+      const response = await APIService.redeem(payload, transactionId);
       console.log("RESPONSE REDEEM HERE ", response.data);
       dispatch(setLoading(false));
       if (response.status >= 200 && response.status <= 299) {
