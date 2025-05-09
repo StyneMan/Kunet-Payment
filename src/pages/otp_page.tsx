@@ -43,6 +43,8 @@ const OTPPage = () => {
   const { redeemData, voucherInfo, transactionId } = useSelector(
     (state: RootState) => state.redeem
   );
+  console.log("Trans ID: ", transactionId);
+  
   const { isLoading } = useSelector((state: RootState) => state.loader);
 
   // const [time, setTime] = useState(120); // 120 seconds = 2 minutes
@@ -59,7 +61,7 @@ const OTPPage = () => {
       timer = setInterval(() => {
         countdown--;
         // displayTime(countdown);
-        setTime((prevTime) => prevTime - 1);
+        setTime((prevTime) => prevTime && prevTime - 1);
         if (countdown <= 0) {
           setTimerOn(false);
           setTime(null);
@@ -282,7 +284,7 @@ const OTPPage = () => {
                   fontFamily: "sans-serif",
                   fontWeight: 600,
                 }}
-              >{`${displayTime(time)}`}</span>
+              >{`${displayTime(time ?? 0)}`}</span>
             </Typography>
           )}
         </Box>

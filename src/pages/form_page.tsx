@@ -15,18 +15,18 @@ import logo from "../assets/images/fine_guy.jpg";
 import { CancelRounded, InfoRounded } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setLoading } from "../store/reducers/loader";
-import APIService from "../service";
+// import APIService from "../service";
 import { useEffect, useState } from "react";
 import CustomDialog from "../components/dialog";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  setRedeemData,
+  // setRedeemData,
   setTransactionID,
   setVoucherInfo,
 } from "../store/reducers/redeem";
-import { RootState } from "../store";
+// import { RootState } from "../store";
 import bg from "../assets/images/giftcard_bg.png";
 import iosBtnBg from "../assets/images/download-on-the-app-store-apple-logo-svgrepo-com.svg";
 import googleBtnBg from "../assets/images/google-play-badge-logo-svgrepo-com.svg";
@@ -48,7 +48,7 @@ const PaymentPage = () => {
   const navigate = useNavigate();
   const usedVoucher = "GJSHHUY6FGUS";
   const validVoucher = "KN1UH090AJKM";
-  const { redeemData: hej } = useSelector((state: RootState) => state.redeem);
+  // const { redeemData: hej } = useSelector((state: RootState) => state.redeem);
   const redeemData: any = {
     hello: "world",
     user_photo:
@@ -164,6 +164,8 @@ const PaymentPage = () => {
             response: { hello: "world", voucher_code: "GJSHHUY67FG3U" },
           })
         );
+        setMessage("")
+        setType("info")
         generateOTP(code);
       } else {
         setUsed(false);
