@@ -35,7 +35,8 @@ const PaymentPage = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const [type, setType] = useState("");
-  const [isUsed, setUsed] = useState(true);
+  const [isUsed, setUsed] = useState(false);
+  const [isInvalid, setInvalid] = useState(false);
   const [fetched, setFetched] = useState(false);
   const [message, setMessage] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
@@ -45,6 +46,8 @@ const PaymentPage = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const usedVoucher = "GJSHHUY6FGUS";
+  const validVoucher = "KN1UH090AJKM";
   const { redeemData: hej } = useSelector((state: RootState) => state.redeem);
   const redeemData: any = {
     hello: "world",
@@ -60,19 +63,22 @@ const PaymentPage = () => {
       dispatch(setTransactionID(transactionId));
 
       const init = async () => {
-        try {
-          const response = await APIService.getPaymentInfo(transactionId);
-          console.log("ReSPONE:: ", response.data);
-          dispatch(setRedeemData(response.data));
-          localStorage.setItem("account_number", response.data?.account_number);
-          localStorage.setItem("bank_code", response.data?.bank_code);
-          if (response.data?.status === "used") {
-            setUsed(true);
-          }
+        // try {
+        //   const response = await APIService.getPaymentInfo(transactionId);
+        //   console.log("ReSPONE:: ", response.data);
+        //   dispatch(setRedeemData(response.data));
+        //   localStorage.setItem("account_number", response.data?.account_number);
+        //   localStorage.setItem("bank_code", response.data?.bank_code);
+        //   if (response.data?.status === "used") {
+        //     setUsed(true);
+        //   }
+        //   setFetched(true);
+        // } catch (error) {
+        //   console.log("ERR: :: ", error);
+        // }
+        setTimeout(() => {
           setFetched(true);
-        } catch (error) {
-          console.log("ERR: :: ", error);
-        }
+        }, 3000);
       };
       init();
     }
@@ -94,6 +100,12 @@ const PaymentPage = () => {
     onSubmit: (values) => {
       try {
         console.log(values);
+        if (values.code === usedVoucher) {
+          setUsed(true);
+        } else {
+          setUsed(false);
+          console.log("VOUCHER ::: ", values);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -142,9 +154,21 @@ const PaymentPage = () => {
       // console.log("RESPONSE VALIDATE HERE ", response.data);
       dispatch(setLoading(false));
 
-      dispatch(setVoucherInfo({response: {hello: "world", voucher_code: "GJSHHUY67FG3U"}}));
-      generateOTP(code);
-
+      if (code === usedVoucher) {
+        setUsed(true);
+      } else if (code === validVoucher) {
+        setUsed(false);
+        setInvalid(false);
+        dispatch(
+          setVoucherInfo({
+            response: { hello: "world", voucher_code: "GJSHHUY67FG3U" },
+          })
+        );
+        generateOTP(code);
+      } else {
+        setUsed(false);
+        setInvalid(true);
+      }
 
       // if (response.status >= 200 && response.status <= 299) {
       //   setMessage(response.data?.message);
@@ -168,7 +192,7 @@ const PaymentPage = () => {
 
   return (
     <Box
-      height={"100vh"}
+      height="100vh"
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
@@ -183,7 +207,7 @@ const PaymentPage = () => {
       <Box margin={"0px auto"}>
         {redeemData ? (
           <div>
-            {isUsed ? (
+            {isUsed || isInvalid ? (
               <Box
                 p={4}
                 component={Card}
@@ -213,7 +237,7 @@ const PaymentPage = () => {
                   gutterBottom
                   fontFamily={"fantasy"}
                 >
-                  This redeemption link has already been used.
+                  {isUsed ? "This redeemption link has already been used." : "This voucher is invalid."}
                 </Typography>
                 <Toolbar />
                 <Toolbar />

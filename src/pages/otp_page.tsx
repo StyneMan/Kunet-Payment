@@ -123,20 +123,24 @@ const OTPPage = () => {
 
       console.log("REDEEM PAYLOAD CHECK :: :: ", payload);
 
-      const response = await APIService.redeem(payload, transactionId);
-      console.log("RESPONSE REDEEM HERE ", response.data);
-      dispatch(setLoading(false));
-      if (response.status >= 200 && response.status <= 299) {
-        setMessage(response.data?.message);
+      // const response = await APIService.redeem(payload, transactionId);
+      // console.log("RESPONSE REDEEM HERE ", response.data);
+      setTimeout(() => {
+        dispatch(setLoading(false));
+      }, 3000);
+      
+      // if (response.status >= 200 && response.status <= 299) {
+        // setMessage(response.data?.message);
+        setMessage("Operation was successful")
         // setType(response.data?.message.includes('does not exist') ? "info" : "error");
-        if (response.data?.status === "error") {
+        // if (response.data?.status === "error") {
           // Show dialog here
-          setOpenDialog(true);
-        } else if (response.data?.status === "success" && response.data?.message?.includes('redeemed')) {
+          // setOpenDialog(true);
+        // } else if (response.data?.status === "success" && response.data?.message?.includes('redeemed')) {
           // Show Success Screen Here
           navigate('/pay/success')
-        }
-      }
+        // }
+      // }
     } catch (error) {
       console.log(error);
       dispatch(setLoading(false));
